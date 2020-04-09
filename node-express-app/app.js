@@ -66,7 +66,11 @@ mongoose
     'mongodb+srv://akashbarsagadey:akash12345@cluster0-l7dfp.mongodb.net/mern?retryWrites=true',
     { useUnifiedTopology: true, useNewUrlParser: true }
   )
-  .then(result => {
-    app.listen(8080);
+  .then((result) => {
+    const server = app.listen(8080);
+    const io = require('./socket').init(server);
+    io.on('connection', (socket) => {
+      console.log('Client connected');
+    });
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
