@@ -21,7 +21,7 @@ exports.getPosts = async (req, res, next) => {
     res.status(200).json({
       message: 'Fetched posts successfully.',
       posts: posts,
-      totalItems: totalItems
+      totalItems: totalItems,
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -50,7 +50,7 @@ exports.createPost = async (req, res, next) => {
     title: title,
     content: content,
     imageUrl: imageUrl,
-    creator: req.userId
+    creator: req.userId,
   });
   try {
     await post.save();
@@ -59,12 +59,12 @@ exports.createPost = async (req, res, next) => {
     await user.save();
     io.getIO().emit('posts', {
       action: 'create',
-      post: { ...post._doc, creator: { _id: req.userId, name: user.name } }
+      post: { ...post._doc, creator: { _id: req.userId, name: user.name } },
     });
     res.status(201).json({
       message: 'Post created successfully!',
       post: post,
-      creator: { _id: user._id, name: user.name }
+      creator: { _id: user._id, name: user.name },
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -172,7 +172,7 @@ exports.deletePost = async (req, res, next) => {
   }
 };
 
-const clearImage = filePath => {
+const clearImage = (filePath) => {
   filePath = path.join(__dirname, '..', filePath);
-  fs.unlink(filePath, err => console.log(err));
+  fs.unlink(filePath, (err) => console.log(err));
 };

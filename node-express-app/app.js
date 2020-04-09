@@ -10,7 +10,7 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const fileStorage = multer.diskStorage({
   destination: function (req, file, cb) {
